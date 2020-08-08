@@ -7,6 +7,6 @@
 <style lang="scss">
 // @import "@/scss/variables1.scss";
 #app {
-  background-color: $theme-color;
+  min-height: 100vh;
 }
 </style>
