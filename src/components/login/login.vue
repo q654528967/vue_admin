@@ -11,9 +11,12 @@
         <el-input v-model="formLabelAlign.username"></el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="formLabelAlign.password"></el-input>
+        <el-input
+          @keyup.enter.native="handleLogin"
+          v-model="formLabelAlign.password"
+        ></el-input>
       </el-form-item>
-      <el-button type="primary">登录</el-button>
+      <el-button @click="handleLogin" type="primary">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -28,6 +31,21 @@ export default {
         password: ""
       }
     };
+  },
+  methods: {
+    async handleLogin() {
+      let res = await this.$http.post("login", this.formLabelAlign);
+      let {
+        data,
+        meta: { msg, status }
+      } = res.data;
+      this.$message({ message: msg });
+      if (status == 200) {
+        localStorage.setItem("token", data.token);
+        this.$router.push("home");
+      }
+      console.log(data);
+    }
   }
 };
 </script>
