@@ -56,13 +56,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   background-color: #324152;
   .login_form {
     width: 400px;
     background-color: #fff;
     border-radius: 5px;
     padding: 30px;
+    h2{
+      text-align: center;
+      margin: 0;
+    }
     .el-button--primary {
       width: 100%;
     }
