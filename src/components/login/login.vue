@@ -34,11 +34,16 @@ export default {
   },
   methods: {
     async handleLogin() {
-      let res = await this.$http.post("login", this.formLabelAlign);
+      let res = await this.$http({
+        method: "post",
+        data: this.formLabelAlign,
+        url: "login"
+      });
+      console.log(res);
       let {
         data,
         meta: { msg, status }
-      } = res.data;
+      } = res;
       this.$message({ message: msg });
       if (status == 200) {
         localStorage.setItem("token", data.token);
@@ -62,7 +67,7 @@ export default {
     background-color: #fff;
     border-radius: 5px;
     padding: 30px;
-    h2{
+    h2 {
       text-align: center;
       margin: 0;
     }

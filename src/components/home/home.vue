@@ -12,20 +12,22 @@
         </el-col>
         <el-col :span="2">
           <div class="grid_content bg-purple">
-            <a class="login_out" @click="handleSignout" href="javascript:;">退出</a>
+            <a class="login_out" @click="handleSignout" href="javascript:;">
+              退出
+            </a>
           </div>
         </el-col>
       </el-row>
     </el-header>
     <el-container>
       <el-aside class="aside" width="200px">
-        <el-menu unique-opened>
+        <el-menu unique-opened router>
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="1-1">
+            <el-menu-item index="/home/users">
               <i class="el-icon-location"></i>
               <span>用户列表</span>
             </el-menu-item>
@@ -84,7 +86,9 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main class="main">111</el-main>
+      <el-main class="main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -97,9 +101,15 @@ export default {
   methods: {
     handleSignout() {
       localStorage.clear();
-      this.$message({message:"退出成功"})
+      this.$message({ message: "退出成功" });
       this.$router.push("login");
     }
+  },
+  async created() {
+    let token = localStorage.getItem('token')
+    token || this.$router.push('login')
+    let res = await this.$http({ method: "get", url: "menus" });
+    console.log(res);
   }
 };
 </script>
