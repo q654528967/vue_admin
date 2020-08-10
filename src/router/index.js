@@ -19,7 +19,7 @@ const routes = [
     component: () => import("@/components/home/home.vue"),
     children: [
       {
-        path: "users",
+        path: "/users",
         name: "users",
         component: () => import("@/components/users/users.vue")
       }

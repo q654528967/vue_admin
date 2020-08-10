@@ -49,7 +49,6 @@ export default {
         localStorage.setItem("token", data.token);
         this.$router.push("home");
       }
-      console.log(data);
     }
   }
 };

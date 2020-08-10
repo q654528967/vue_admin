@@ -3,18 +3,16 @@
     <el-header class="header">
       <el-row>
         <el-col :span="4">
-          <div class="grid_content bg-purple">
-            d
-          </div>
+          <div class="grid_content bg-purple">d</div>
         </el-col>
         <el-col :span="18" class="grid_content bg-purple-light middle">
           <h3>电商后台管理系统</h3>
         </el-col>
         <el-col :span="2">
           <div class="grid_content bg-purple">
-            <a class="login_out" @click="handleSignout" href="javascript:;">
-              退出
-            </a>
+            <a class="login_out" @click="handleSignout" href="javascript:;"
+              >退出</a
+            >
           </div>
         </el-col>
       </el-row>
@@ -22,66 +20,22 @@
     <el-container>
       <el-aside class="aside" width="200px">
         <el-menu unique-opened router>
-          <el-submenu index="1">
+          <el-submenu
+            v-for="item1 of asideList"
+            :key="item1.id"
+            :index="`${item1.order}`"
+          >
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{ item1.authName }}</span>
             </template>
-            <el-menu-item index="/home/users">
+            <el-menu-item
+              v-for="item2 in item1.children"
+              :key="item2.id"
+              :index="`${item2.path}`"
+            >
               <i class="el-icon-location"></i>
-              <span>用户列表</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="2-1">
-              <i class="el-icon-location"></i>
-              <span>角色列表</span>
-            </el-menu-item>
-            <el-menu-item index="2-2">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品管理</span>
-            </template>
-            <el-menu-item index="3-1">
-              <i class="el-icon-location"></i>
-              <span>商品列表</span>
-            </el-menu-item>
-            <el-menu-item index="3-2">
-              <i class="el-icon-location"></i>
-              <span>分类参数</span>
-            </el-menu-item>
-            <el-menu-item index="3-3">
-              <i class="el-icon-location"></i>
-              <span>商品分类</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>订单管理</span>
-            </template>
-            <el-menu-item index="4-1">
-              <i class="el-icon-location"></i>
-              <span>选项1</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>数据统计</span>
-            </template>
-            <el-menu-item index="5-1">
-              <i class="el-icon-location"></i>
-              <span>选项1</span>
+              <span>{{ item2.authName }}</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -96,7 +50,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      asideList: []
+    };
   },
   methods: {
     handleSignout() {
@@ -106,10 +62,11 @@ export default {
     }
   },
   async created() {
-    let token = localStorage.getItem('token')
-    token || this.$router.push('login')
+    let token = localStorage.getItem("token");
+    token || this.$router.push("login");
     let res = await this.$http({ method: "get", url: "menus" });
-    console.log(res);
+    let { data } = res;
+    this.asideList = data;
   }
 };
 </script>
